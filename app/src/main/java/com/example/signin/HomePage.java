@@ -18,6 +18,9 @@ public class HomePage extends AppCompatActivity {
     private EditText date;
 
     private Button register;
+    private Button next;
+
+
 
 
     //hard coded data to test (LD ROBOT)
@@ -90,25 +93,35 @@ public class HomePage extends AppCompatActivity {
                     }
                 }
 
+
+
+            }
+        });
+
+        next = findViewById(R.id.btnNext);
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomePage.this, robotData.class);
+                startActivity(intent);
+
             }
         });
 
 
 
 
-        TextView link  = (TextView)findViewById(R.id.textViewLink);
-        link.setMovementMethod(LinkMovementMethod.getInstance());
+
+
+        //hyper link code
+//        TextView link  = (TextView)findViewById(R.id.textViewLink);
+//        link.setMovementMethod(LinkMovementMethod.getInstance());
 //        Intent intent = new Intent(HomePage.this, robotData.class);
 //        startActivity(intent);
 
 
-
-
-
-
-
     }
-
 
     private boolean validate(String number,String model,String date){
         if(number.equals(testNum) && model.equals(testModel) && date.equals(testDate) ){
