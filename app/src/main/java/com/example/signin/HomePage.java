@@ -99,11 +99,10 @@ public class HomePage extends AppCompatActivity {
         });
 
         next = findViewById(R.id.btnNext);
-
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomePage.this, robotData.class);
+                Intent intent = new Intent(HomePage.this, notifications.class);
                 startActivity(intent);
 
             }

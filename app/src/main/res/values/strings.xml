@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name"></string>
-    <string
-        name="messageWithLink"><a href="https://www.google.com/">robot already registered? </a></string>
+    <string name="messageWithLink"><a href="https://www.google.com/">robot already registered? </a></string>
+
+    <string name="big_text_notifications">
+        This Activity would handle the reminder app\'s functionality.
+        \n\nThe notification type for this example was the Big Text Style!
+    </string>
+
+
 </resources>
