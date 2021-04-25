@@ -57,8 +57,8 @@
         android:layout_height="89dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginBottom="243dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginBottom="380dp"
         android:onClick="onClick"
         android:text="Generate Notifications" />
 
@@ -68,19 +68,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="54dp"
-        android:layout_marginBottom="122dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginBottom="186dp"
         android:onClick="onClick"
         android:text="Sites" />
 
     <Button
         android:id="@+id/robots"
-        android:layout_width="209dp"
+        android:layout_width="203dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="37dp"
-        android:layout_marginBottom="29dp"
+        android:layout_marginStart="113dp"
+        android:layout_marginBottom="102dp"
         android:onClick="onClick"
         android:text="Robots" />
 

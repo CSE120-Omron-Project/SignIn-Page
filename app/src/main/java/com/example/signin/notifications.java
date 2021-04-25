@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -54,6 +55,12 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
     private TextView mNotificationDetailsTextView;
 
 
+    //button for data
+    private Button robotBtn;
+
+
+
+
 
 
     @Override
@@ -65,6 +72,12 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
         mMainRelativeLayout = (RelativeLayout) findViewById(R.id.mainRelativeLayout);
         mNotificationDetailsTextView = (TextView) findViewById(R.id.notificationDetails);
         mSpinner = (Spinner) findViewById(R.id.spinner);
+
+
+
+        //handles robot button on the notification page
+        robotBtn = (Button)findViewById(R.id.robots);
+
 
         mNotificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
 
@@ -80,7 +93,27 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(this);
 
+
+        robotBtnHandler();
+
+
+
     }
+
+    //handles when u click the robot button
+    public void robotBtnHandler(){
+        robotBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(notifications.this,database.class);
+                startActivity(intent);
+
+            }
+        });
+
+    }
+
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -92,9 +125,18 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
                 NOTIFICATION_STYLES_DESCRIPTION[mSelectedNotification]);
     }
 
+
+
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         // Required
+    }
+
+
+    public void onClickRobot(View v){
+
+
+
     }
 
 

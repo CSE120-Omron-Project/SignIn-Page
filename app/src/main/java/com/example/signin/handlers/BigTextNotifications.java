@@ -8,7 +8,6 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.example.signin.R;
-
 public class BigTextNotifications extends Activity {
 
     @Override
@@ -20,3 +19,4 @@ public class BigTextNotifications extends Activity {
 
     }
 }
+//
