@@ -84,16 +84,13 @@ public class dbHelp extends SQLiteOpenHelper {
         }
     }
 
+
+
     public Cursor getAllParts(){ //gets all the parts from our db
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + OMRON,null);
-
         return res;
     }
-
-
-
-
 
 
 
