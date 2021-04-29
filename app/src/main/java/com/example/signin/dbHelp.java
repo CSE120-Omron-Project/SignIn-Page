@@ -84,9 +84,33 @@ public class dbHelp extends SQLiteOpenHelper {
         }
     }
 
+    // Remaining Days not working yet
+    public Cursor getRemainingDays90() { //gets all the parts from our db
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT DATEDIFF(DATE_ADD(SELECT strftime('%Y%j', '`check`'), INTERVAL 90 DAY), CURDATE()) FROM" + OMRON + "WHERE `PERIOD` = `3 Months`", null);
+        return res;
+    }
 
+    // updateSerial does not work yet.
+    // open up for committing
+    public Cursor getUpdateSerial() { //gets Update Serial from our db
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("UPDATE OMRON SET serialNum to 1 " + OMRON, null);
+        return res;
+    }
 
-    public Cursor getAllParts(){ //gets all the parts from our db
+    public Cursor getAllSerial() { //gets all the Serial numbers from our db
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + OMRON, null);
+        return res;
+    }
+    public Cursor getAllRobots() { //gets all the Robots from our db
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + OMRON, null);
+        return res;
+    }
+
+    public Cursor getAllParts(){ //gets all the Parts from our db
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + OMRON,null);
         return res;

@@ -22,7 +22,7 @@ public class database extends AppCompatActivity {
         db = new dbHelp(this);
 
         //uncomment this to deletee the table so there wont be any duplicates
-      // db.deleteInOmron();
+        db.deleteInOmron();
 
 
 
@@ -80,7 +80,23 @@ public class database extends AppCompatActivity {
         button = (Button)findViewById(R.id.button);
 
         //calls view parts
-        viewParts();
+        //viewParts();
+
+        //button = (Button)findViewById(R.id.button);
+        viewRemainingDays90();
+
+        //BELOW: THEY DO NOT HAVE BUTTONS YET. PLACE THE BUTTON WHEN CONNECTING TO FRONT END.
+
+        // button = (Button)findViewById(R.id.button);
+
+        //calls for Viewing
+        //viewRobots();
+        //viewSerial();
+        //updateSerial();
+        //viewSerial();
+        //viewRobotAndParts();
+
+
 
 
 //
@@ -94,7 +110,6 @@ public class database extends AppCompatActivity {
 
     }
 
-
     //This handles the button view all
     public void viewParts(){
         button.setOnClickListener(
@@ -105,12 +120,149 @@ public class database extends AppCompatActivity {
 
                         if(res.getCount() == 0){
                             //show message
-                            showMessage("ERRORS","QUERY DIDNT WORK");
+                            showMessage("ERRORS","QUERY DID NOT WORK");
                         }
 
                         StringBuffer buffer = new StringBuffer();
                         while(res.moveToNext()){
                             buffer.append("PART: "+ res.getString( 3) + "\n");
+
+                        }
+
+                        //show message
+                        showMessage("DATA",buffer.toString());
+
+                    }
+                }
+        );
+    }
+
+    public void viewRemainingDays90(){
+        button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Cursor res =  db.getRemainingDays90(); //calls db object, get all robots is where the query is written
+
+                        if(res.getCount() == 0){
+                            //show message
+                            showMessage("ERRORS","QUERY DID NOT WORK");
+                        }
+
+                        StringBuffer buffer = new StringBuffer();
+                        while(res.moveToNext()){
+                            buffer.append("ROBOT: "+ res.getString( 1) + "\n");
+                            buffer.append("PART: "+ res.getString( 3) + "\n");
+                            buffer.append("Remaining Days: "+ res.getString( 6) + "\n");
+
+                        }
+
+                        //show message
+                        showMessage("DATA",buffer.toString());
+
+                    }
+                }
+        );
+    }
+
+    //This handles the button view all
+    public void viewRobotAndParts(){
+        button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Cursor res =  db.getAllParts(); //calls db object, get all parts is where the query is written
+
+                        if(res.getCount() == 0){
+                            //show message
+                            showMessage("ERRORS","QUERY DID NOT WORK");
+                        }
+
+                        StringBuffer buffer = new StringBuffer();
+                        while(res.moveToNext()){
+                            buffer.append("ROBOT: "+ res.getString( 1) + "\n");
+                            buffer.append("PART: "+ res.getString( 3) + "\n");
+
+                        }
+
+                        //show message
+                        showMessage("DATA",buffer.toString());
+
+                    }
+                }
+        );
+    }
+
+    // This handles viewing all robots
+    public void viewRobots(){
+        button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Cursor res =  db.getAllRobots(); //calls db object, get all robots is where the query is written
+
+                        if(res.getCount() == 0){
+                            //show message
+                            showMessage("ERRORS","QUERY DID NOT WORK");
+                        }
+
+                        StringBuffer buffer = new StringBuffer();
+                        while(res.moveToNext()){
+                            buffer.append("ROBOT: "+ res.getString( 1) + "\n");
+
+                        }
+
+                        //show message
+                        showMessage("DATA",buffer.toString());
+
+                    }
+                }
+        );
+    }
+
+    // This handles viewing Serial Numbers
+    public void viewSerial(){
+        button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Cursor res =  db.getAllSerial(); //calls db object, get all robots is where the query is written
+
+                        if(res.getCount() == 0){
+                            //show message
+                            showMessage("ERRORS","QUERY DID NOT WORK");
+                        }
+
+                        StringBuffer buffer = new StringBuffer();
+                        while(res.moveToNext()){
+                            buffer.append("Serial: "+ res.getString( 0) + "\n");
+
+                        }
+
+                        //show message
+                        showMessage("DATA",buffer.toString());
+
+                    }
+                }
+        );
+    }
+
+    // This handles viewing Serial Numbers
+    public void updateSerial(){
+        button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Cursor res =  db.getUpdateSerial(); //calls db object, get all robots is where the query is written
+
+                        if(res.getCount() == 0){
+                            //show message
+                            showMessage("ERRORS","QUERY DID NOT WORK");
+                        }
+
+                        StringBuffer buffer = new StringBuffer();
+                        while(res.moveToNext()){
+                            buffer.append("Serial: "+ res.getString( 0) + "\n");
 
                         }
 
