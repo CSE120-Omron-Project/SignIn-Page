@@ -94,7 +94,6 @@ public class database extends AppCompatActivity {
 
     }
 
-
     //This handles the button view all
     public void viewParts(){
         button.setOnClickListener(

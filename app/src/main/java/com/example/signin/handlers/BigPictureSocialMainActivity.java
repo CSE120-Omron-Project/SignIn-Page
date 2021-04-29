@@ -2,7 +2,6 @@ package com.example.signin.handlers;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -10,12 +9,12 @@ import android.os.Bundle;
 import com.example.signin.R;
 import com.example.signin.notifications;
 
-public class BigTextNotifications extends Activity {
+public class BigPictureSocialMainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_big_text_notifications);
+        setContentView(R.layout.activity_big_picture_main);
 
         // Cancel Notification
         NotificationManager notificationManager =
@@ -23,8 +22,6 @@ public class BigTextNotifications extends Activity {
 
         notificationManager.cancel(notifications.NOTIFICATION_ID);
 
-
-
+        // TODO: Handle and display social post from your database
     }
 }
-//
