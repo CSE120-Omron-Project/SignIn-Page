@@ -85,12 +85,12 @@ public class dbHelp extends SQLiteOpenHelper {
     }
 
 
-
-    public Cursor getAllParts(){ //gets all the parts from our db
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + OMRON,null);
-        return res;
-    }
+//
+//    public Cursor getAllParts(){ //gets all the parts from our db
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        Cursor res = db.rawQuery("SELECT * FROM " + OMRON,null);
+//        return res;
+//    }
 
 
 //    // Remaining Days not working yet
@@ -100,14 +100,46 @@ public class dbHelp extends SQLiteOpenHelper {
 //        return res;
 //    }
 //
-//    // updateSerial does not work yet.
-//    // open up for committing
-//    public Cursor getUpdateSerial() { //gets Update Serial from our db
+    // updateSerial does not work yet.
+//    public Cursor getUpdateSerial(int serialNum, String robot,int procedure,String part,String period, int time, String check) { //gets Update Serial from our db
 //        SQLiteDatabase db = this.getWritableDatabase();
-//        Cursor res = db.rawQuery("UPDATE OMRON SET serialNum to 1 " + OMRON, null);
-//        return res;
-//    }
+//        ContentValues values = new ContentValues();
 //
+//        values.put("[COL_SERIAL_NUMBER]", serialNum);
+//
+//        db.update(OMRON,values,"serialNum = ?",null);
+//
+//        return true;
+//    }
+
+//     updateCheck does not work yet. (Version #1)
+//    public Cursor getUpdateCheck(int serialNum, String robot,int procedure,String part,String period, int time, String check) { //gets Update Serial from our db
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//
+//        values.put("[COL_CHECK]",check);
+//
+//        Cursor date = db.rawQuery("SELECT * FROM " + OMRON, null);
+//        db.update(OMRON,values,"check = ?",date);
+
+//
+//        return true;
+//    }
+
+//    //     updateCheck does not work yet. Testing Version #2 of SQLite Query
+//    public void getUpdateCheck(String check) { //gets Update Serial from our db
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//
+//        values.put("[COL_CHECK]",check);
+//
+//        String updateCheckSQL = "UPDATE " + OMRON + "SET " + check + " = "+ 4 + ";";
+//        db.execSQL(updateCheckSQL);
+//
+//
+//    }
+
+
 //    public Cursor getAllSerial() { //gets all the Serial numbers from our db
 //        SQLiteDatabase db = this.getWritableDatabase();
 //        Cursor res = db.rawQuery("SELECT * FROM " + OMRON, null);

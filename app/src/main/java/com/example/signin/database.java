@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+
 public class database extends AppCompatActivity {
 
     dbHelp db ;
     Button button;
 
+    // These EditTexts are for updatingSerial
+    // EditText editName,editSurname,editMarks,editTextId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +24,8 @@ public class database extends AppCompatActivity {
 
         db = new dbHelp(this);
 
-        //uncomment this to deletee the table so there wont be any duplicates
+        //uncomment this to delete the table so there wont be any duplicates
        // db.deleteInOmron();
-
-
 
         //inserting the data into the table
         boolean insert = db.insertInOmron(0,"i4-350L/450L/550L",1,"Front Panel","3 Months",5,"2021-05-04");
@@ -79,8 +80,12 @@ public class database extends AppCompatActivity {
 
         button = (Button)findViewById(R.id.button);
 
+        // These EditTexts are for updatingSerial
+//        private EditText serialNum ;
+//        editTextId = (EditText)findViewById(R.id.editText_id);
+
         //calls view parts
-        viewParts();
+//        viewParts();
 
         //button = (Button)findViewById(R.id.button);
         //viewRemainingDays90();
@@ -89,20 +94,15 @@ public class database extends AppCompatActivity {
 
         // button = (Button)findViewById(R.id.button);
 
+//        updateCheck();
         //calls for Viewing
         //viewRobots();
         //viewSerial();
-        //updateSerial();
-        //viewSerial();
-        //viewRobotAndParts();
-
-
-
-
+//        updateSerial();
+//        viewSerial();
+//        viewRobotAndParts();
 //
 //
-//
-
 //
 //        if(insert == true){
 //            Toast.makeText(getApplicationContext(),"INSERTED first DATA 10 ", Toast.LENGTH_LONG).show();
@@ -110,33 +110,34 @@ public class database extends AppCompatActivity {
 
     }
 
-    //This handles the button view all
-    public void viewParts(){
-        button.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Cursor res =  db.getAllParts(); //calls db object, get all parts is where the query is written
+    //    This handles the button view all
+//    public void viewParts(){
+//        button.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Cursor res =  db.getAllParts(); //calls db object, get all parts is where the query is written
+//
+//                        if(res.getCount() == 0){
+//                            //show message
+//                            showMessage("ERRORS","QUERY DID NOT WORK");
+//                        }
+//
+//                        StringBuffer buffer = new StringBuffer();
+//                        while(res.moveToNext()){
+//                            buffer.append("PART: "+ res.getString( 3) + "\n");
+//
+//                        }
+//
+//                        //show message
+//                        showMessage("DATA",buffer.toString());
+//
+//                    }
+//                }
+//        );
+//    }
 
-                        if(res.getCount() == 0){
-                            //show message
-                            showMessage("ERRORS","QUERY DID NOT WORK");
-                        }
-
-                        StringBuffer buffer = new StringBuffer();
-                        while(res.moveToNext()){
-                            buffer.append("PART: "+ res.getString( 3) + "\n");
-
-                        }
-
-                        //show message
-                        showMessage("DATA",buffer.toString());
-
-                    }
-                }
-        );
-    }
-
+//    Remainder of 90 days Does not work yet
 //    public void viewRemainingDays90(){
 //        button.setOnClickListener(
 //                new View.OnClickListener() {
@@ -165,7 +166,7 @@ public class database extends AppCompatActivity {
 //        );
 //    }
 
-    //This handles the button view all
+    // This handles the button view all for ROBOTS and PARTS
 //    public void viewRobotAndParts(){
 //        button.setOnClickListener(
 //                new View.OnClickListener() {
@@ -247,13 +248,33 @@ public class database extends AppCompatActivity {
 //        );
 //    }
 
-    // This handles viewing Serial Numbers
+    // This handles updating Serial Numbers and the editTextID for updating.
 //    public void updateSerial(){
 //        button.setOnClickListener(
 //                new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
 //                        Cursor res =  db.getUpdateSerial(); //calls db object, get all robots is where the query is written
+//
+//                        boolean isUpdate = db.getUpdateSerial(editTextId.getText().toString(),
+//                                editName.getText().toString(),
+//                                editSurname.getText().toString(),editMarks.getText().toString());
+//                        if(isUpdate == true)
+//                            Toast.makeText(database.this,"Data Updated",Toast.LENGTH_LONG).show();
+//                        else
+//                            Toast.makeText(database.this,"Data not Updated",Toast.LENGTH_LONG).show();
+//                    }
+//                }
+//        );
+//    }
+
+    // This handles updating Check Numbers and the editTextID for updating.
+//    public void updateCheck(){
+//        button.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Cursor res =  db.getUpdateCheck(); //calls db object, get all robots is where the query is written
 //
 //                        if(res.getCount() == 0){
 //                            //show message
