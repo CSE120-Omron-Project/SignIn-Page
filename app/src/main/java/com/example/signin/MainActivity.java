@@ -22,12 +22,15 @@ public class MainActivity extends AppCompatActivity {
 
     boolean isValid = false;
 
+    private dbHelp logindb;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        logindb = dbHelp.getInstance(this);
 
         //connects to xml layout, etName is what we called the part "enter name" in the xml
         eName = findViewById(R.id.etName);

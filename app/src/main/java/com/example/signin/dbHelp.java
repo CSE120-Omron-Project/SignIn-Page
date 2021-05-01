@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -12,48 +13,58 @@ public class dbHelp extends SQLiteOpenHelper {
 
 
     //if u want to select only 1 part of the table u have to give it the right index.
-    public static final String OMRON = "omron";
-    public static final String COL_SERIAL_NUMBER = "serialNumber"; //index 0
-    public static final String COL_ROBOT = "robot"; //1
-    public static final String COL_PROCEDURE = "procedure"; //2
-    public static final String COL_PART = "part"; //3
-    public static final String COL_PERIOD = "period"; //4
-    public static final String COL_TIME = "time";//5
-    public static final String COL_CHECK = "check";//6
+    private static final String TABLE_NAME = "omron";
+    private static final int DATABASE_VERSION = 1;
+    private static final String COL_SERIAL_NUMBER = "serialNumber"; //index 0
+    private static final String COL_ROBOT = "robot"; //1
+    private static final String COL_PROCEDURE = "procedure"; //2
+    private static final String COL_PART = "part"; //3
+    private static final String COL_PERIOD = "period"; //4
+    private static final String COL_TIME = "time";//5
+    private static final String COL_CHECK = "check";//6
 
-    public dbHelp(@Nullable Context context) {
-        //name of db is robot.db
+    private static dbHelp sInstance;
 
-        super(context, COL_ROBOT + ".db", null, 1);
+    public dbHelp(Context context) {
+        //name of db is omron
+        super(context, TABLE_NAME, null, DATABASE_VERSION);
+        SQLiteDatabase db = this.getWritableDatabase();
+    }
 
+    // Called when the database connection is being configured
+    // Configure database settings for things like foreign key support, write-ahead logging, etc.
+    @Override
+    public void onConfigure(SQLiteDatabase db){
+        super.onConfigure(db);
+        db.setForeignKeyConstraintsEnabled(true);
     }
 
     //used the first time a db is accessed. creates a new db
+    //will not be called if a database already exists on disk with the same name
     @Override
     public void onCreate(SQLiteDatabase db) {
 
 
         //first create a new table
-        String createTableStatement = "CREATE TABLE " + OMRON + "(" + "[COL_SERIAL_NUMBER]" + " INT, " + "[COL_ROBOT]" + " TEXT, " + "[COL_PROCEDURE]" + " INT, " + "[COL_PART]" + " TEXT, " +"[COL_PERIOD]" + " TEXT, "+ "[COL_TIME] " + " INT, " + "[COL_CHECK] " + " TEXT) ";
+        String createTableStatement = "CREATE TABLE " + TABLE_NAME + "(" + "[COL_SERIAL_NUMBER]" + " INT, " + "[COL_ROBOT]" + " TEXT, " + "[COL_PROCEDURE]" + " INT, " + "[COL_PART]" + " TEXT, " +"[COL_PERIOD]" + " TEXT, "+ "[COL_TIME] " + " INT, " + "[COL_CHECK] " + " TEXT) ";
 
         db.execSQL(createTableStatement);
-
-
 
     }
 
     //is called when db version is changed.
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE " + OMRON);
-
-
+        if(oldVersion != newVersion){
+            db.execSQL("DROP TABLE " + TABLE_NAME);
+            onCreate(db);
+        }
     }
 
     //use only to delete table, deletes all values
     public void deleteInOmron(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String del = "DELETE FROM " + OMRON;
+        String del = "DELETE FROM " + TABLE_NAME;
         db.execSQL(del);
 
 
@@ -61,7 +72,7 @@ public class dbHelp extends SQLiteOpenHelper {
     }
 
     //insert data into omron table
-    public boolean insertInOmron (int serialNum, String robot,int procedure,String part,String period, int time, String check){
+    public boolean insertInOmron (String serialNum, String robot,String procedure,String part,String period, String time, String check){
 
         SQLiteDatabase db  = this.getWritableDatabase();
         ContentValues values= new ContentValues();
@@ -83,6 +94,14 @@ public class dbHelp extends SQLiteOpenHelper {
             return true;
         }
     }
+
+    public static synchronized dbHelp getInstance(Context context){
+        if (sInstance == null){
+            sInstance = new dbHelp(context.getApplicationContext());
+        }
+        return sInstance;
+    }
+
 
 
 //
@@ -120,7 +139,7 @@ public class dbHelp extends SQLiteOpenHelper {
 //            return false;
 //        else
 //            return true;
-    }
+//    }
 
 //     updateCheck does not work yet. (Version #1)
 //    public Cursor getUpdateCheck(int serialNum, String robot,int procedure,String part,String period, int time, String check) { //gets Update Serial from our db
@@ -155,11 +174,25 @@ public class dbHelp extends SQLiteOpenHelper {
 //        Cursor res = db.rawQuery("SELECT * FROM " + OMRON, null);
 //        return res;
 //    }
-//    public Cursor getAllRobots() { //gets all the Robots from our db
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        Cursor res = db.rawQuery("SELECT * FROM " + OMRON, null);
-//        return res;
-//    }
+    public void updateSerial(String serial, String robot, String check){
+        Log.d("Updating", "updateSerial was called");
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("[COL_SERIAL_NUMBER]", serial);
+        contentValues.put("[COL_ROBOT]", robot);
+        contentValues.put("[COL_CHECK]", check);
+        Log.d("ContentValues", "ContentValues filled, performing update?");
+//        String strSQL = "UPDATE " +TABLE_NAME + " SET COL_SERIAL_NUMBER = " + serial + ", COL_CHECK = " + check + " WHERE COL_ROBOT = " + robot;
+//        db.execSQL(strSQL);
+        db.update(TABLE_NAME, contentValues, "[COL_ROBOT]=?", new String[] {robot});
+        Log.d("UpdateComplete", "Update Complete");
+    }
+
+    public Cursor getAllRobots() { //gets all the Robots from our db
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        return res;
+    }
 
 
 

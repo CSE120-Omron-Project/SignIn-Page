@@ -11,6 +11,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
@@ -62,14 +63,14 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
 
     private Button robotBtn;
 
-
-
+    private dbHelp notificationdb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications);
+        notificationdb = dbHelp.getInstance(this);
 
         mMainRelativeLayout = (RelativeLayout) findViewById(R.id.mainRelativeLayout);
         mNotificationDetailsTextView = (TextView) findViewById(R.id.notificationDetails);
