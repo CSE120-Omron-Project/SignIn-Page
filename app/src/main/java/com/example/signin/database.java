@@ -3,10 +3,13 @@ package com.example.signin;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class database extends AppCompatActivity {
@@ -14,9 +17,12 @@ public class database extends AppCompatActivity {
     dbHelp db ;
     Button button;
 
-    // These EditTexts are for updatingSerial
-    // EditText editName,editSurname,editMarks,editTextId;
+    // These EditTexts are for insertingRow
+//    EditText editRobot; // editSerialNum, , editProcedure, editPart, editPeriod, editTime, editCheck;
+//    Button btnAddRow;
 
+
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,32 +83,38 @@ public class database extends AppCompatActivity {
 
 
 
+       // button = (Button)findViewById(R.id.button);
 
-        button = (Button)findViewById(R.id.button);
 
-        // These EditTexts are for updatingSerial
-//        private EditText serialNum ;
-//        editTextId = (EditText)findViewById(R.id.editText_id);
+        // These EditTexts are for insertingRow however They are error'd red since they editTexts are not created yet.
+//        editSerialNum = findViewById(R.id.editSerialNum);
+//        editRobot = (EditText)findViewById(R.id.editRobot);
+//        editProcedure = (EditText)findViewById(R.id.editProcedure);
+//        editPart = (EditText)findViewById(R.id.editPart);
+//        editPeriod = (EditText)findViewById(R.id.editPeriod);
+//        editTime = (EditText)findViewById(R.id.editTime);
+//        editCheck = (EditText)findViewById(R.id.editCheck);
+//        btnAddRow = (Button) findViewById(R.id.insertionButton1); // button to finalize insertion of row
+//        insertRow();
 
-        //calls view parts
+
+        //This calls viewParts()
 //        viewParts();
-
-        //button = (Button)findViewById(R.id.button);
-        //viewRemainingDays90();
+//        button = (Button)findViewById(R.id.button);
 
         //BELOW: THEY DO NOT HAVE BUTTONS YET. PLACE THE BUTTON WHEN CONNECTING TO FRONT END.
 
-        // button = (Button)findViewById(R.id.button);
+
 
 //        updateCheck();
-        //calls for Viewing
-        //viewRobots();
-        //viewSerial();
+//        calls for Viewing
+//        viewRobots();
+//        viewSerial();
 //        updateSerial();
 //        viewSerial();
 //        viewRobotAndParts();
 //
-//
+
 //
 //        if(insert == true){
 //            Toast.makeText(getApplicationContext(),"INSERTED first DATA 10 ", Toast.LENGTH_LONG).show();
@@ -137,7 +149,9 @@ public class database extends AppCompatActivity {
 //        );
 //    }
 
-//    Remainder of 90 days Does not work yet
+
+//    WIP: Remainder for 90 day Interval
+        // Essential for Omron Minimum Viable Product
 //    public void viewRemainingDays90(){
 //        button.setOnClickListener(
 //                new View.OnClickListener() {
@@ -248,21 +262,26 @@ public class database extends AppCompatActivity {
 //        );
 //    }
 
-    // This handles updating Serial Numbers and the editTextID for updating.
-//    public void updateSerial(){
-//        button.setOnClickListener(
+    // This handles insertion of Entire Row.
+//    public void insertRow(){
+//        btnAddRow.setOnClickListener(
 //                new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
-//                        Cursor res =  db.getUpdateSerial(); //calls db object, get all robots is where the query is written
+//                        boolean isInserted = db.getInsertRow(
+//                               // Integer.parseInt(editSerialNum.getText().toString()),
+//                                editRobot.getText().toString(),
+//                                Integer.parseInt(editProcedure.getText().toString()),
+//                                editPart.getText().toString(),
+//                                editPeriod.getText().toString(),
+//                                Integer.parseInt(editTime.getText().toString()),
+//                                editCheck.getText().toString()
+//                        );
 //
-//                        boolean isUpdate = db.getUpdateSerial(editTextId.getText().toString(),
-//                                editName.getText().toString(),
-//                                editSurname.getText().toString(),editMarks.getText().toString());
-//                        if(isUpdate == true)
-//                            Toast.makeText(database.this,"Data Updated",Toast.LENGTH_LONG).show();
+//                        if(isInserted == true)
+//                            Toast.makeText(database.this,"Row Data is inserted",Toast.LENGTH_LONG).show();
 //                        else
-//                            Toast.makeText(database.this,"Data not Updated",Toast.LENGTH_LONG).show();
+//                            Toast.makeText(database.this,"Row Data is not inserted",Toast.LENGTH_LONG).show();
 //                    }
 //                }
 //        );

@@ -100,17 +100,27 @@ public class dbHelp extends SQLiteOpenHelper {
 //        return res;
 //    }
 //
-    // updateSerial does not work yet.
-//    public Cursor getUpdateSerial(int serialNum, String robot,int procedure,String part,String period, int time, String check) { //gets Update Serial from our db
+//     WIP: insertRow using db.insert() , returns boolean to database.java @insertRow call
+    // int serialNum, String robot,int procedure,String part,String period, int time, String check
+//    public boolean getInsertRow(String robot) { //gets Update Serial from our db
 //        SQLiteDatabase db = this.getWritableDatabase();
 //        ContentValues values = new ContentValues();
-//
+
 //        values.put("[COL_SERIAL_NUMBER]", serialNum);
+//        values.put("[COL_ROBOT]",robot);
+//        values.put("[COL_PROCEDURE]",procedure);
+//        values.put("[COL_PART]",part);
+//        values.put("[COL_PERIOD]",period);
+//        values.put("[COL_TIME]",time);
+//        values.put("[COL_CHECK]",check);
 //
-//        db.update(OMRON,values,"serialNum = ?",null);
+//        long result = db.insert(OMRON,null,values);
 //
-//        return true;
-//    }
+//        if (result == -1)
+//            return false;
+//        else
+//            return true;
+    }
 
 //     updateCheck does not work yet. (Version #1)
 //    public Cursor getUpdateCheck(int serialNum, String robot,int procedure,String part,String period, int time, String check) { //gets Update Serial from our db
@@ -120,13 +130,14 @@ public class dbHelp extends SQLiteOpenHelper {
 //        values.put("[COL_CHECK]",check);
 //
 //        Cursor date = db.rawQuery("SELECT * FROM " + OMRON, null);
+                    // db.update(OMRON,values,"serialNum = ?",new String[] {check}); this is from update
 //        db.update(OMRON,values,"check = ?",date);
 
 //
 //        return true;
 //    }
 
-//    //     updateCheck does not work yet. Testing Version #2 of SQLite Query
+    //     updateCheck does not work yet. Testing Version #2 of SQLite Query
 //    public void getUpdateCheck(String check) { //gets Update Serial from our db
 //        SQLiteDatabase db = this.getWritableDatabase();
 //        ContentValues values = new ContentValues();
@@ -138,7 +149,6 @@ public class dbHelp extends SQLiteOpenHelper {
 //
 //
 //    }
-
 
 //    public Cursor getAllSerial() { //gets all the Serial numbers from our db
 //        SQLiteDatabase db = this.getWritableDatabase();
