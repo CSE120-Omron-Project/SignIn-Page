@@ -1,3 +1,4 @@
+
 package com.example.signin;
 
 import android.content.ContentValues;
@@ -8,6 +9,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+
+import java.lang.reflect.Array;
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class dbHelp extends SQLiteOpenHelper {
 
@@ -105,19 +114,45 @@ public class dbHelp extends SQLiteOpenHelper {
 
 
 //
-//    public Cursor getAllParts(){ //gets all the parts from our db
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        Cursor res = db.rawQuery("SELECT * FROM " + OMRON,null);
-//        return res;
-//    }
+    public Cursor getAllParts(){ //gets all the parts from our db
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME,null);
+        return res;
+    }
 
 
 //    // Remaining Days not working yet
 //    public Cursor getRemainingDays90() { //gets all the parts from our db
 //        SQLiteDatabase db = this.getWritableDatabase();
-//        Cursor res = db.rawQuery("SELECT DATEDIFF(DATE_ADD(SELECT strftime('%Y%j', '`check`'), INTERVAL 90 DAY), CURDATE()) FROM" + OMRON + "WHERE `PERIOD` = `3 Months`", null);
+//        Cursor res = db.rawQuery("SELECT DATEDIFF(DATE_ADD(SELECT strftime('%Y%j', '`check`'), INTERVAL 90 DAY), CURDATE()) FROM" + TABLE_NAME + "WHERE `PERIOD` = `3 Months`", null);
 //        return res;
 //    }
+
+//Returns Robot/Parts that have 3 Months and are within a certain amount of days away from maintenance
+    public Cursor getUrgent(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        // Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD] = ? ORDER BY ABS(JULIANDAY('" +adate +"') - " + "JULIANDAY(DATE([COL_CHECK], '+3 months'))) < 7"", new String[]{"3 Months"});
+        Cursor res = db.rawQuery("SELECT DISTINCT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD]=? AND JULIANDAY(DATE([COL_CHECK], '+3 month')) - " + "JULIANDAY('now') < 7", new String[]{"3 Months"});
+        return res;
+    }
+
+    public Cursor getMedium(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        // Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD] = ? ORDER BY ABS(JULIANDAY('" +adate +"') - " + "JULIANDAY(DATE([COL_CHECK], '+3 months'))) < 7"", new String[]{"3 Months"});
+        Cursor res = db.rawQuery("SELECT DISTINCT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD]=? AND JULIANDAY(DATE([COL_CHECK], '+3 month')) - " + "JULIANDAY('now') < 21 AND JULIANDAY(DATE([COL_CHECK], '+3 month')) - " + "JULIANDAY('now') > 7", new String[]{"3 Months"});
+        return res;
+    }
+
+    public Cursor getLow() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        // Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD] = ? ORDER BY ABS(JULIANDAY('" +adate +"') - " + "JULIANDAY(DATE([COL_CHECK], '+3 months'))) < 7"", new String[]{"3 Months"});
+        Cursor res = db.rawQuery("SELECT DISTINCT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD]=? AND JULIANDAY(DATE([COL_CHECK], '+3 month')) - " + "JULIANDAY('now') < 30 AND JULIANDAY(DATE([COL_CHECK], '+3 month')) - " + "JULIANDAY('now') > 21", new String[]{"3 Months"});
+        return res;
+    }
+
 //
 //     WIP: insertRow using db.insert() , returns boolean to database.java @insertRow call
     // int serialNum, String robot,int procedure,String part,String period, int time, String check

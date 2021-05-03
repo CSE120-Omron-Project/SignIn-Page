@@ -49,6 +49,10 @@
         android:layout_below="@+id/spinner"
         android:layout_alignEnd="@+id/spinner"
         android:layout_alignParentStart="true"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="193dp"
+        android:layout_marginEnd="-48dp"
+        android:layout_marginBottom="-193dp"
         android:paddingTop="@dimen/activity_vertical_margin" />
 
     <Button
@@ -83,6 +87,14 @@
         android:layout_marginBottom="102dp"
         android:onClick="onClick"
         android:text="Robots" />
+
+    <Button
+        android:id="@+id/testNot"
+        android:layout_width="184dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sites"
+        android:layout_marginBottom="66dp"
+        android:text="Notification" />
 
 </RelativeLayout>
 
