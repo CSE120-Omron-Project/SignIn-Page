@@ -7,53 +7,58 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 
 public class database extends AppCompatActivity {
 
-    dbHelp db ;
-    Button button;
-
-    // These EditTexts are for updatingSerial
-    // EditText editName,editSurname,editMarks,editTextId;
+    private dbHelp db ;
+    private Button button;
+    private EditText serialNum;
+    private EditText robotModel;
+    private EditText partName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //uncomment this to delete the table so there wont be any duplicates
-        //db.deleteInOmron();
+        setContentView(R.layout.activity_database);
         db = dbHelp.getInstance(this);
+        serialNum = findViewById(R.id.selectSerial);
+        robotModel = findViewById(R.id.selectRobot);
+        partName = findViewById(R.id.selectPart);
 
-        button = (Button)findViewById(R.id.button);
+        button = (Button)findViewById(R.id.getDate);
+        viewDate();
 
-        // These EditTexts are for updatingSerial
-//        private EditText serialNum ;
-//        editTextId = (EditText)findViewById(R.id.editText_id);
+    }
 
-        //calls view parts
-//        viewParts();
+    public void viewDate(){
+        button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String inputSerial = serialNum.getText().toString();
+                        String inputRobot = robotModel.getText().toString();
+                        String inputPart = partName.getText().toString();
+                        Cursor res =  db.getCheck(inputSerial, inputRobot, inputPart); //calls db object, get all parts is where the query is written
 
-        //button = (Button)findViewById(R.id.button);
-        //viewRemainingDays90();
+                        if(res.getCount() == 0){
+                            //show message
+                            showMessage("ERRORS","QUERY DID NOT WORK");
+                        }
 
-        //BELOW: THEY DO NOT HAVE BUTTONS YET. PLACE THE BUTTON WHEN CONNECTING TO FRONT END.
+                        StringBuffer buffer = new StringBuffer();
+                        while(res.moveToNext()){
+                            buffer.append("Date: "+ res.getString( 6) + "\n");
 
-        // button = (Button)findViewById(R.id.button);
+                        }
 
-//        updateCheck();
-        //calls for Viewing
-        //viewRobots();
-        //viewSerial();
-//        updateSerial();
-//        viewSerial();
-//        viewRobotAndParts();
-//
-//
-//
-//        if(insert == true){
-//            Toast.makeText(getApplicationContext(),"INSERTED first DATA 10 ", Toast.LENGTH_LONG).show();
-//        }
+                        //show message
+                        showMessage("Last Date Checked",buffer.toString());
 
+                    }
+                }
+        );
     }
 
     //    This handles the button view all
@@ -249,7 +254,5 @@ public class database extends AppCompatActivity {
         builder.setTitle(title);
         builder.setMessage(message);
         builder.show();
-
-
     }
 }

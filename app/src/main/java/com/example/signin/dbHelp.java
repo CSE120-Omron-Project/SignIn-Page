@@ -223,6 +223,12 @@ public class dbHelp extends SQLiteOpenHelper {
         Log.d("UpdateComplete", "Update Complete");
     }
 
+    public Cursor getCheck(String serial, String robot, String part){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT DISTINCT * FROM " + TABLE_NAME + " WHERE [COL_SERIAL_NUMBER] = ? AND [COL_ROBOT] = ? AND [COL_PART] = ?", new String[]{serial,robot,part});
+        return res;
+    }
+
     public Cursor getAllRobots() { //gets all the Robots from our db
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
