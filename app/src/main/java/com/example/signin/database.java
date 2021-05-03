@@ -8,12 +8,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class database extends AppCompatActivity {
 
     private dbHelp db ;
     private Button button;
+
+    private Button btnCheck;
+
     private EditText serialNum;
     private EditText robotModel;
     private EditText partName;
@@ -30,6 +34,26 @@ public class database extends AppCompatActivity {
         button = (Button)findViewById(R.id.getDate);
         viewDate();
 
+        btnCheck = (Button)findViewById(R.id.updateCheck);
+        todayCheck();
+
+    }
+
+    public void todayCheck(){
+        btnCheck.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String inputSerial = serialNum.getText().toString();
+                        String inputRobot = robotModel.getText().toString();
+                        String inputPart = partName.getText().toString();
+
+                        db.updateCheck(inputSerial, inputRobot, inputPart);
+                        Toast.makeText(database.this, "Updated Date!", Toast.LENGTH_LONG).show();
+
+                    }
+                }
+        );
     }
 
     public void viewDate(){

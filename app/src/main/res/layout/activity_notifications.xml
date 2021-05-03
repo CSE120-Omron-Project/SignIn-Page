@@ -67,34 +67,15 @@
         android:text="Generate Notifications" />
 
     <Button
-        android:id="@+id/sites"
-        android:layout_width="203dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="110dp"
-        android:layout_marginBottom="186dp"
-        android:onClick="onClick"
-        android:text="Sites" />
-
-    <Button
         android:id="@+id/robots"
         android:layout_width="203dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="113dp"
-        android:layout_marginBottom="102dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginBottom="189dp"
         android:onClick="onClick"
         android:text="Robots" />
-
-    <Button
-        android:id="@+id/testNot"
-        android:layout_width="184dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/sites"
-        android:layout_marginBottom="66dp"
-        android:text="Notification" />
 
 </RelativeLayout>
 

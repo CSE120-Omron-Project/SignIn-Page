@@ -67,7 +67,7 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
     private TextView mNotificationDetailsTextView;
 
     private Button robotBtn;
-    private Button testNot;
+//    private Button testNot;
 
     private dbHelp notificationdb;
 
@@ -100,8 +100,8 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
         robotBtn = (Button)findViewById(R.id.robots);
         onRobotBtn();
 
-        testNot = (Button)findViewById(R.id.testNot);
-        onTestBtn();
+//        testNot = (Button)findViewById(R.id.testNot);
+//        onTestBtn();
 
     }
 
@@ -134,33 +134,33 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
         );
     }
 
-    public void onTestBtn(){
-        testNot.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Cursor res = null; //calls db object, get all parts is where the query is written
-                        res = notificationdb.getUrgent90();
-
-                        if(res.getCount() == 0){
-                            //show message
-                            showMessage("ERRORS","QUERY DID NOT WORK");
-                        }
-
-                        StringBuffer buffer = new StringBuffer();
-                        while(res.moveToNext()){
-                            buffer.append("PART: "+ res.getString( 3) + "\n");
-
-                        }
-
-                        //show message
-                        showMessage("DATA",buffer.toString());
-
-                    }
-                }
-        );
-    }
+//    public void onTestBtn(){
+//        testNot.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                        Cursor res = null; //calls db object, get all parts is where the query is written
+//                        res = notificationdb.getUrgent90();
+//
+//                        if(res.getCount() == 0){
+//                            //show message
+//                            showMessage("ERRORS","QUERY DID NOT WORK");
+//                        }
+//
+//                        StringBuffer buffer = new StringBuffer();
+//                        while(res.moveToNext()){
+//                            buffer.append("PART: "+ res.getString( 3) + "\n");
+//
+//                        }
+//
+//                        //show message
+//                        showMessage("DATA",buffer.toString());
+//
+//                    }
+//                }
+//        );
+//    }
 
     //this is the pop up that shows up with the data
     public void showMessage(String title, String message){
@@ -201,7 +201,7 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
 
         switch (notificationStyle) {
             case Select_Type:
-                generateBigPictureStyleNotification();
+                //generateBigPictureStyleNotification();
                 break;
 
             case Urgent:

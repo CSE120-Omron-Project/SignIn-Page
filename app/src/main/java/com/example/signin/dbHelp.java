@@ -77,8 +77,6 @@ public class dbHelp extends SQLiteOpenHelper {
         String del = "DELETE FROM " + TABLE_NAME;
         db.execSQL(del);
 
-
-
     }
 
     //insert data into omron table
@@ -245,11 +243,22 @@ public class dbHelp extends SQLiteOpenHelper {
         Log.d("UpdateComplete", "Update Complete");
     }
 
+    public void updateCheck(String serial, String robot, String part){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date today = new Date();
+        String todayString = dateFormat.format(today);
+        contentValues.put("[COL_CHECK]", todayString);
+        db.update(TABLE_NAME, contentValues, "[COL_SERIAL_NUMBER] = ? AND [COL_ROBOT] = ? AND [COL_PART] = ?", new String[]{serial,robot,part});
+    }
+
     public Cursor getCheck(String serial, String robot, String part){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("SELECT DISTINCT * FROM " + TABLE_NAME + " WHERE [COL_SERIAL_NUMBER] = ? AND [COL_ROBOT] = ? AND [COL_PART] = ?", new String[]{serial,robot,part});
         return res;
     }
+
 
     public Cursor getAllRobots() { //gets all the Robots from our db
         SQLiteDatabase db = this.getWritableDatabase();
