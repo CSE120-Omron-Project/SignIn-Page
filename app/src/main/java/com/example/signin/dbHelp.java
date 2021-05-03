@@ -4,6 +4,7 @@ package com.example.signin;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.MergeCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -128,29 +129,50 @@ public class dbHelp extends SQLiteOpenHelper {
 //        return res;
 //    }
 
-//Returns Robot/Parts that have 3 Months and are within a certain amount of days away from maintenance
-    public Cursor getUrgent(){
+//Returns Robot/Parts that are within a certain amount of days away from maintenance
+    public Cursor getUrgent90(){
         SQLiteDatabase db = this.getReadableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         // Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD] = ? ORDER BY ABS(JULIANDAY('" +adate +"') - " + "JULIANDAY(DATE([COL_CHECK], '+3 months'))) < 7"", new String[]{"3 Months"});
         Cursor res = db.rawQuery("SELECT DISTINCT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD]=? AND JULIANDAY(DATE([COL_CHECK], '+3 month')) - " + "JULIANDAY('now') < 7", new String[]{"3 Months"});
-        return res;
+        Cursor res6Months = db.rawQuery("SELECT DISTINCT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD]=? AND JULIANDAY(DATE([COL_CHECK], '+6 month')) - " + "JULIANDAY('now') < 7", new String[]{"6 Months"});
+        Cursor res12Months = db.rawQuery("SELECT DISTINCT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD]=? AND JULIANDAY(DATE([COL_CHECK], '+12 month')) - " + "JULIANDAY('now') < 7", new String[]{"12 Months"});
+        Cursor[] resArray = new Cursor[3];
+        resArray[0] = res;
+        resArray[1] = res6Months;
+        resArray[2] = res12Months;
+        Cursor resCombine = new MergeCursor(resArray);
+        return resCombine;
     }
 
-    public Cursor getMedium(){
+    public Cursor getMedium90(){
         SQLiteDatabase db = this.getReadableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         // Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD] = ? ORDER BY ABS(JULIANDAY('" +adate +"') - " + "JULIANDAY(DATE([COL_CHECK], '+3 months'))) < 7"", new String[]{"3 Months"});
         Cursor res = db.rawQuery("SELECT DISTINCT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD]=? AND JULIANDAY(DATE([COL_CHECK], '+3 month')) - " + "JULIANDAY('now') < 21 AND JULIANDAY(DATE([COL_CHECK], '+3 month')) - " + "JULIANDAY('now') > 7", new String[]{"3 Months"});
-        return res;
+        Cursor res6Months = db.rawQuery("SELECT DISTINCT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD]=? AND JULIANDAY(DATE([COL_CHECK], '+6 month')) - " + "JULIANDAY('now') < 21 AND JULIANDAY(DATE([COL_CHECK], '+3 month')) - " + "JULIANDAY('now') > 7", new String[]{"6 Months"});
+        Cursor res12Months = db.rawQuery("SELECT DISTINCT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD]=? AND JULIANDAY(DATE([COL_CHECK], '+12 month')) - " + "JULIANDAY('now') < 21 AND JULIANDAY(DATE([COL_CHECK], '+3 month')) - " + "JULIANDAY('now') > 7", new String[]{"12 Months"});
+        Cursor[] resArray = new Cursor[3];
+        resArray[0] = res;
+        resArray[1] = res6Months;
+        resArray[2] = res12Months;
+        Cursor resCombine = new MergeCursor(resArray);
+        return resCombine;
     }
 
-    public Cursor getLow() {
+    public Cursor getLow90() {
         SQLiteDatabase db = this.getReadableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         // Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD] = ? ORDER BY ABS(JULIANDAY('" +adate +"') - " + "JULIANDAY(DATE([COL_CHECK], '+3 months'))) < 7"", new String[]{"3 Months"});
-        Cursor res = db.rawQuery("SELECT DISTINCT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD]=? AND JULIANDAY(DATE([COL_CHECK], '+3 month')) - " + "JULIANDAY('now') < 30 AND JULIANDAY(DATE([COL_CHECK], '+3 month')) - " + "JULIANDAY('now') > 21", new String[]{"3 Months"});
-        return res;
+        Cursor res = db.rawQuery("SELECT DISTINCT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD]=? AND JULIANDAY(DATE([COL_CHECK], '+3 month')) - " + "JULIANDAY('now') > 21", new String[]{"3 Months"});
+        Cursor res6Months = db.rawQuery("SELECT DISTINCT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD]=? AND JULIANDAY(DATE([COL_CHECK], '+6 month')) - " + "JULIANDAY('now') > 21", new String[]{"6 Months"});
+        Cursor res12Months = db.rawQuery("SELECT DISTINCT * FROM " + TABLE_NAME +" WHERE [COL_PERIOD]=? AND JULIANDAY(DATE([COL_CHECK], '+12 month')) - " + "JULIANDAY('now') > 21", new String[]{"12 Months"});
+        Cursor[] resArray = new Cursor[3];
+        resArray[0] = res;
+        resArray[1] = res6Months;
+        resArray[2] = res12Months;
+        Cursor resCombine = new MergeCursor(resArray);
+        return resCombine;
     }
 
 //

@@ -9,6 +9,8 @@ import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
@@ -75,6 +77,7 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications);
         notificationdb = dbHelp.getInstance(this);
+        createNotificaitonChennel();
 
         mMainRelativeLayout = (RelativeLayout) findViewById(R.id.mainRelativeLayout);
         mNotificationDetailsTextView = (TextView) findViewById(R.id.notificationDetails);
@@ -138,7 +141,7 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
                     public void onClick(View v) {
 
                         Cursor res = null; //calls db object, get all parts is where the query is written
-                        res = notificationdb.getUrgent();
+                        res = notificationdb.getUrgent90();
 
                         if(res.getCount() == 0){
                             //show message
@@ -202,15 +205,97 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
                 break;
 
             case Urgent:
-                generateBigPictureStyleNotification();;
+                Cursor res = null; //calls db object, get all parts is where the query is written
+                res = notificationdb.getUrgent90();
+
+                if(res.getCount() == 0){
+                    //show message
+                    showMessage("ERRORS","QUERY DID NOT WORK");
+                }
+
+//                StringBuffer buffer = new StringBuffer();
+                while(res.moveToNext()){
+//                    buffer.append("PART: "+ res.getString( 3) + "\n");
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "omron")
+                            .setContentTitle("Urgent Robot deadlines!")
+                            .setContentText(res.getString(3))
+                            .setSmallIcon(R.drawable.omron)
+                            .setLargeIcon(BitmapFactory.decodeResource(
+                                    getResources(),
+                                    R.drawable.omron));
+//                        .setStyle(new Notification.BigPictureStyle().bigPicture())
+
+                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+                    notificationManager.notify(100, builder.build());
+                }
+//                NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "omron")
+//                        .setContentTitle("Urgent Robot deadlines!")
+//                        .setContentText(buffer.toString())
+//                        .setSmallIcon(R.drawable.omron)
+//                        .setLargeIcon(BitmapFactory.decodeResource(
+//                                getResources(),
+//                                R.drawable.omron));
+////                        .setStyle(new Notification.BigPictureStyle().bigPicture())
+//
+//                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+//
+//                notificationManager.notify(100, builder.build());
+
                 break;
 
             case Low_Risk:
-                generateBigPictureStyleNotification();;
+                Cursor resLow = null; //calls db object, get all parts is where the query is written
+                resLow = notificationdb.getLow90();
+
+                if(resLow.getCount() == 0){
+                    //show message
+                    showMessage("ERRORS","QUERY DID NOT WORK");
+                }
+
+//                StringBuffer buffer = new StringBuffer();
+                while(resLow.moveToNext()){
+//                    buffer.append("PART: "+ res.getString( 3) + "\n");
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "omron")
+                            .setContentTitle("Low Urgency Robot deadlines.")
+                            .setContentText(resLow.getString(3))
+                            .setSmallIcon(R.drawable.omron)
+                            .setLargeIcon(BitmapFactory.decodeResource(
+                                    getResources(),
+                                    R.drawable.omron));
+//                        .setStyle(new Notification.BigPictureStyle().bigPicture())
+
+                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+                    notificationManager.notify(100, builder.build());
+                };
                 break;
 
             case Medium:
-                generateBigPictureStyleNotification();;
+                Cursor resMed = null; //calls db object, get all parts is where the query is written
+                resMed = notificationdb.getMedium90();
+
+                if(resMed.getCount() == 0){
+                    //show message
+                    showMessage("ERRORS","QUERY DID NOT WORK");
+                }
+
+//                StringBuffer buffer = new StringBuffer();
+                while(resMed.moveToNext()){
+//                    buffer.append("PART: "+ res.getString( 3) + "\n");
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "omron")
+                            .setContentTitle("Medium Urgency Robot deadlines~")
+                            .setContentText(resMed.getString(3))
+                            .setSmallIcon(R.drawable.omron)
+                            .setLargeIcon(BitmapFactory.decodeResource(
+                                    getResources(),
+                                    R.drawable.omron));
+//                        .setStyle(new Notification.BigPictureStyle().bigPicture())
+
+                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+                    notificationManager.notify(100, builder.build());
+                };
                 break;
 
             default:
@@ -219,7 +304,18 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
     }
 
 
+    private void createNotificaitonChennel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = "OmronNotificaiton";
+            String description = "A reminder notification for maitenance dates";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("omron", name, importance);
+            channel.setDescription(description);
 
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
 
 
@@ -366,7 +462,7 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
 
                 .setSubText(Integer.toString(1))
                 .addAction(replyAction)
-                .setCategory(Notification.CATEGORY_SOCIAL)
+                .setCategory(Notification.CATEGORY_REMINDER)
 
                 // Sets priority for 25 and below. For 26 and above, 'priority' is deprecated for
                 // 'importance' which is set in the NotificationChannel. The integers representing
