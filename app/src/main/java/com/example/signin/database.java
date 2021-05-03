@@ -17,10 +17,12 @@ public class database extends AppCompatActivity {
     private Button button;
 
     private Button btnCheck;
+    private Button btnChoice;
 
     private EditText serialNum;
     private EditText robotModel;
     private EditText partName;
+    private EditText dateChoice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +32,16 @@ public class database extends AppCompatActivity {
         serialNum = findViewById(R.id.selectSerial);
         robotModel = findViewById(R.id.selectRobot);
         partName = findViewById(R.id.selectPart);
+        dateChoice = findViewById(R.id.selectDate);
 
         button = (Button)findViewById(R.id.getDate);
         viewDate();
 
         btnCheck = (Button)findViewById(R.id.updateCheck);
         todayCheck();
+
+        btnChoice = (Button)findViewById(R.id.updateChoice);
+        choiceCheck();
 
     }
 
@@ -48,8 +54,26 @@ public class database extends AppCompatActivity {
                         String inputRobot = robotModel.getText().toString();
                         String inputPart = partName.getText().toString();
 
-                        db.updateCheck(inputSerial, inputRobot, inputPart);
-                        Toast.makeText(database.this, "Updated Date!", Toast.LENGTH_LONG).show();
+                        db.updateCheckToday(inputSerial, inputRobot, inputPart);
+                        Toast.makeText(database.this, "Updated Date to Today!", Toast.LENGTH_LONG).show();
+
+                    }
+                }
+        );
+    }
+
+    public void choiceCheck(){
+        btnChoice.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String inputSerial = serialNum.getText().toString();
+                        String inputRobot = robotModel.getText().toString();
+                        String inputPart = partName.getText().toString();
+                        String inputDate = dateChoice.getText().toString();
+
+                        db.updateCheckChoice(inputSerial, inputRobot, inputPart, inputDate);
+                        Toast.makeText(database.this, "Updated Date to Selected!", Toast.LENGTH_LONG).show();
 
                     }
                 }

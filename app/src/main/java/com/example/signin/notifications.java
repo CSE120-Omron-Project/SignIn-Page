@@ -218,7 +218,7 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
 //                    buffer.append("PART: "+ res.getString( 3) + "\n");
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "omron")
                             .setContentTitle("Urgent Robot deadlines!")
-                            .setContentText(res.getString(3))
+                            .setContentText("Serial Number: " + res.getString(0) + " Part: " + res.getString(3))
                             .setSmallIcon(R.drawable.omron)
                             .setLargeIcon(BitmapFactory.decodeResource(
                                     getResources(),
@@ -258,7 +258,7 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
 //                    buffer.append("PART: "+ res.getString( 3) + "\n");
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "omron")
                             .setContentTitle("Low Urgency Robot deadlines.")
-                            .setContentText(resLow.getString(3))
+                            .setContentText("Serial Number: " + resLow.getString(0) + " Part: " + resLow.getString(3))
                             .setSmallIcon(R.drawable.omron)
                             .setLargeIcon(BitmapFactory.decodeResource(
                                     getResources(),
@@ -285,7 +285,7 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
 //                    buffer.append("PART: "+ res.getString( 3) + "\n");
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "omron")
                             .setContentTitle("Medium Urgency Robot deadlines~")
-                            .setContentText(resMed.getString(3))
+                            .setContentText("Serial Number: " + resMed.getString(0) + " Part: " + resMed.getString(3))
                             .setSmallIcon(R.drawable.omron)
                             .setLargeIcon(BitmapFactory.decodeResource(
                                     getResources(),

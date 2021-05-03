@@ -239,11 +239,11 @@ public class dbHelp extends SQLiteOpenHelper {
         Log.d("ContentValues", "ContentValues filled, performing update?");
 //        String strSQL = "UPDATE " +TABLE_NAME + " SET COL_SERIAL_NUMBER = " + serial + ", COL_CHECK = " + check + " WHERE COL_ROBOT = " + robot;
 //        db.execSQL(strSQL);
-        db.update(TABLE_NAME, contentValues, "[COL_ROBOT]=?", new String[] {robot});
+        db.update(TABLE_NAME, contentValues, "[COL_SERIAL_NUMBER] = 0 AND [COL_ROBOT]=?", new String[] {robot});
         Log.d("UpdateComplete", "Update Complete");
     }
 
-    public void updateCheck(String serial, String robot, String part){
+    public void updateCheckToday(String serial, String robot, String part){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -253,9 +253,24 @@ public class dbHelp extends SQLiteOpenHelper {
         db.update(TABLE_NAME, contentValues, "[COL_SERIAL_NUMBER] = ? AND [COL_ROBOT] = ? AND [COL_PART] = ?", new String[]{serial,robot,part});
     }
 
+    public void updateCheckChoice(String serial, String robot, String part, String date){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("[COL_CHECK]", date);
+        db.update(TABLE_NAME, contentValues, "[COL_SERIAL_NUMBER] = ? AND [COL_ROBOT] = ? AND [COL_PART] = ?", new String[]{serial,robot,part});
+    }
+
+
+
     public Cursor getCheck(String serial, String robot, String part){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("SELECT DISTINCT * FROM " + TABLE_NAME + " WHERE [COL_SERIAL_NUMBER] = ? AND [COL_ROBOT] = ? AND [COL_PART] = ?", new String[]{serial,robot,part});
+        return res;
+    }
+
+    public Cursor freeSpot(String robot){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE [COL_SERIAL_NUMBER] = 0 AND [COL_ROBOT] = ?", new String[]{robot});
         return res;
     }
 
