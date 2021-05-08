@@ -277,12 +277,8 @@ public class dbHelp extends SQLiteOpenHelper {
 
     public Cursor getAllRobots() { //gets all the Robots from our db
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE [COL_SERIAL_NUMBER] != 0", null);
         return res;
     }
-
-
-
-
 
 }

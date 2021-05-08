@@ -67,6 +67,7 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
     private TextView mNotificationDetailsTextView;
 
     private Button robotBtn;
+    private Button tableBtn;
 //    private Button testNot;
 
     private dbHelp notificationdb;
@@ -100,6 +101,9 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
         robotBtn = (Button)findViewById(R.id.robots);
         onRobotBtn();
 
+        tableBtn = (Button)findViewById(R.id.getTable);
+        onTableBtn();
+
 //        testNot = (Button)findViewById(R.id.testNot);
 //        onTestBtn();
 
@@ -128,6 +132,33 @@ public class notifications extends AppCompatActivity implements AdapterView.OnIt
 
                         Intent intent = new Intent(notifications.this, database.class);
                         startActivity(intent);
+
+                    }
+                }
+        );
+    }
+
+    public void onTableBtn(){
+        tableBtn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Cursor res = null; //calls db object, get all parts is where the query is written
+                        res = notificationdb.getAllRobots();
+
+                        if(res.getCount() == 0){
+                            //show message
+                            showMessage("ERRORS","QUERY DID NOT WORK");
+                        }
+
+                        StringBuffer buffer = new StringBuffer();
+                        while(res.moveToNext()){
+                            buffer.append("Serial: "+ res.getString( 0) + "\nRobot: " + res.getString(1) + "\nPart: " + res.getString(3) + "\n");
+
+                        }
+
+                        //show message
+                        showMessage("DATA",buffer.toString());
 
                     }
                 }
